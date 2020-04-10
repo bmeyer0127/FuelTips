@@ -11,7 +11,13 @@ import java.io.*;
 import java.util.Scanner;
 
 public class tips {
-  public static void main(String [] args) {
+
+  public static void main(String [] args) throws IOException {
+    File tipHistory = new File("C:\\Users\\Colleen\\Desktop\\TipHistory.txt");
+
+    FileOutputStream fos = new FileOutputStream(tipHistory, true);
+    PrintWriter pw = new PrintWriter(fos);
+    pw.println("============================");
 
     Scanner scanner = new Scanner(System.in);
 
@@ -19,6 +25,7 @@ public class tips {
 
     System.out.print("Enter the date: ");
     String date = scanner.nextLine();
+
 
     System.out.print("How many people worked " + date + "?: ");
     int numPeople = scanner.nextInt();
@@ -32,10 +39,9 @@ public class tips {
     System.out.print("Credit Card Tips: ");
     double creditTips = scanner.nextDouble();
 
-    System.out.println("");
+    System.out.println();
     System.out.println("Worker info: ");
 
-    boolean done = true;
     for (int i = 0; i < numPeople; i++) {
 
       scanner.nextLine();
@@ -57,13 +63,18 @@ public class tips {
     double totalClaimed = creditTips / totalHours;
     double totalTips = (creditTips + cashTips) / totalHours;
 
-    System.out.println("");
+    System.out.println();
     System.out.println("==============");
-    System.out.println("");
+    System.out.println();
 
     System.out.printf("Date: %s\n", date);
+    pw.printf("Date: %s\n",date);
+
     System.out.println("Total tips: $" + (creditTips + cashTips));
+    pw.printf("Total tips: $%.2f\n", creditTips + cashTips);
+
     System.out.printf("Total hours worked: %.2f\n\n", totalHours);
+    pw.printf("Total hours worked: %.2f\n\n", totalHours);
 
     for (int i = 0; i < numPeople; i++) {
 
@@ -71,8 +82,17 @@ public class tips {
       double total = totalTips * hours[i];
 
       System.out.printf("%s:\nClaim: %.2f\nTotal: %.2f\n\n", names[i], claim, total);
+      pw.println(names[i]);
+      pw.printf("Claim: %.2f", claim);
+      pw.println();
+      pw.printf("Total: %.2f", total);
+      pw.println();
+      pw.println();
+      //pw.printf("%s:\nClaim: %.2f\nTotal: %.2f\n\n", names[i], claim, total);
+
     }
 
+    pw.close();
     System.out.println("All done :) DO NOT PRESS ANYTHING UNLESS YOU WANT TO DO THIS OVER\n");
   }
 }
